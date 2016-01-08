@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 public class GoalSeeker {
 
 	private double bar;
@@ -11,6 +13,9 @@ public class GoalSeeker {
 	private double endval;
 	private double tolerance;
 	private double rente;
+	private Double minimum = -1000000000000000000.0;
+	private Double maximum = -minimum;
+	private Integer maxIterations = 1000;
 	
 	public GoalSeeker (
 			double barVal, 
@@ -50,14 +55,6 @@ public class GoalSeeker {
 		this.tolerance = tol;
 	}
 
-	public String formula = "=(bar*"
-			+ "(1+percent*(month+sperrMonth)/1200)*(1+percent/100)^years"
-			+ "+r*(1+dynamic/100)^(years-1)"
-			+ "*(12+(66+12*schuss)*percent/1200)"
-			+ "*(((1+percent/100)/(1+dynamic/100))^years-1)/(((1+percent/100)/(1+dynamic/100))-1)"
-			+ "*(1+percent*(month+sperrMonth)/1200)"
-			+ "+r*(1+dynamic/100)^years*month*(1+percent*(2*sperrMonth+month-1+2*schuss)/2400))*(1+percent/100)^sperrYears+endval";
-	
 	public double calculate() {
 		
 		double q = 1 + percent/100;
@@ -90,31 +87,64 @@ public class GoalSeeker {
 				+ rente*Math.pow(qd,years)
 				* month*(1+percent*(2*sperrMonth+month-1+2*schuss)/2400))
 				* Math.pow(q,sperrYears)+endval;
-		
+		if (result-tolerance < 0 && result + tolerance > 0) {
+			return 0;
+		}
 		return result;
 	}
 	
-	public double seekEndval() {
-		double tryVal = this.endval;
-		setEndval(61956);
-		System.out.println(calculate());
-		Double minimum = Double.MIN_VALUE;
-		Double maximum = Double.MAX_VALUE;
+	public boolean validateEndval() {
+		double myEndval = this.getEndval();
 		setEndval(minimum);
-		Double minVal = calculate();
-		System.out.println(minVal);
+		double minVal = calculate();
 		setEndval(maximum);
-		Double maxVal = calculate();
-		System.out.println(maxVal);
-		return tryVal;
+		double maxVal = calculate();
+		setEndval(myEndval);
+		return (minVal * maxVal < 0);
 	}
 	
-	
+	public double seekEndval() {
+		double x1 = minimum;
+		double x2 = maximum;
+		int iterNum = 1;    /* how many times bisection has been performed */
+		double f1, f2, fmid;  /* function values */
+		double mid = 0;          /* new point for function evaluation */
+		/* to print numbers with 7 digits behind the decimal point */
+		DecimalFormat df = new DecimalFormat("0.0000000");
+
+		System.out.println("Iteration #\tX1\t\tX2\t\tX3\t\tF(X3)"); // \t is a tab
+
+		do {
+			setEndval(x1);
+			f1 = calculate(); // evaluate function at endpoints
+			setEndval(x2);
+			f2 = calculate();
+			if (f1 * f2 > 0) {   // can't do bisection
+				System.out.println("Values do not bracket a root");
+				break;            // give up
+			}
+			mid = (x1 + x2) / 2;  // bisection gives us the "average" of the point values
+			setEndval(mid);
+			fmid = calculate(); // evaluate function at midpoint
+			System.out.println(iterNum + "\t\t" + df.format(x1) + "\t" + df.format(x2) + "\t" +
+					df.format(mid) + "\t" + df.format(fmid));
+			if (fmid * f1 < 0)    // determine next interval bound
+				x2 = mid;
+			else
+				x1 = mid;
+			iterNum++;          // current iteration has been completed
+		} while (Math.abs(x1 - x2) / 2 >= tolerance && Math.abs(fmid) > tolerance && iterNum <= maxIterations);
+		// interval size minimum not reached yet and we haven't found a root and it's not time
+		// to give up yet
+		return mid;
+	}
+
+
 	public static void main(String[] args) {
 		GoalSeeker goal = new GoalSeeker(
 				1000.0,
 				-500.0,
-				61956.3639661922,
+				51956.3639661922,
 				1,
 				0,
 				10,
@@ -124,7 +154,7 @@ public class GoalSeeker {
 				Binary.nachschüssig);
 		
 		goal.setTolerance(0.0000000001);
-		System.out.println(goal.calculate());
+		System.out.println(goal.seekEndval());
 
 	}
 
@@ -198,6 +228,50 @@ public class GoalSeeker {
 
 	public void setTolerance(double tolerance) {
 		this.tolerance = tolerance;
+	}
+
+	public double getBar() {
+		return bar;
+	}
+
+	public void setBar(double bar) {
+		this.bar = bar;
+	}
+
+	public double getRente() {
+		return rente;
+	}
+
+	public void setRente(double rente) {
+		this.rente = rente;
+	}
+
+	public Double getMinimum() {
+		return minimum;
+	}
+
+	public void setMinimum(Double minimum) {
+		this.minimum = minimum;
+	}
+
+	public Double getMaximum() {
+		return maximum;
+	}
+
+	public void setMaximum(Double maximum) {
+		this.maximum = maximum;
+	}
+
+	public Integer getMaxIterations() {
+		return maxIterations;
+	}
+
+	public void setMaxIterations(Integer maxIterations) {
+		this.maxIterations = maxIterations;
+	}
+
+	public void setSchuss(int schuss) {
+		this.schuss = schuss;
 	}
 	
 	
