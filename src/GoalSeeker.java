@@ -1,5 +1,4 @@
 import java.text.DecimalFormat;
-
 public class GoalSeeker {
 
 	private double bar;
@@ -103,7 +102,58 @@ public class GoalSeeker {
 		return (minVal * maxVal < 0);
 	}
 	
-	public double seekEndval() {
+	private void newValue(Parameter p, Double val) {
+		switch (p) {
+		case BAR:
+			this.bar = val;
+			break;
+
+		case DYNAMIC:
+			this.dynamic = val;
+			break;
+		
+		case PERCENT:
+			this.percent = val;
+			break;
+			
+		case YEARS:
+			this.years = val.intValue();
+			break;
+			
+		case MONTH:
+			this.month = val.intValue();
+			break;
+			
+		case SPERR_MONTH:
+			this.sperrMonth = val.intValue();
+			break;
+			
+		case SPERR_YEARS:
+			this.sperrYears = val.intValue();
+			break;
+			
+		case SCHUSS:
+			this.schuss = val.intValue();
+			break;
+			
+		case ENDVAL:
+			this.endval = val;
+			break;
+			
+		case TOLERANCE:
+			this.tolerance = val;
+			break;
+			
+		case RENTE:
+			this.rente = val;
+			break;
+			
+		default:
+			break;
+		}
+	}
+	
+	public double seekVal(Parameter val) {
 		double x1 = minimum;
 		double x2 = maximum;
 		int iterNum = 1;    /* how many times bisection has been performed */
@@ -115,16 +165,16 @@ public class GoalSeeker {
 		System.out.println("Iteration #\tX1\t\tX2\t\tX3\t\tF(X3)"); // \t is a tab
 
 		do {
-			setEndval(x1);
+			newValue(val,x1);
 			f1 = calculate(); // evaluate function at endpoints
-			setEndval(x2);
+			newValue(val,x2);
 			f2 = calculate();
 			if (f1 * f2 > 0) {   // can't do bisection
 				System.out.println("Values do not bracket a root");
 				break;            // give up
 			}
 			mid = (x1 + x2) / 2;  // bisection gives us the "average" of the point values
-			setEndval(mid);
+			newValue(val,mid);
 			fmid = calculate(); // evaluate function at midpoint
 			System.out.println(iterNum + "\t\t" + df.format(x1) + "\t" + df.format(x2) + "\t" +
 					df.format(mid) + "\t" + df.format(fmid));
@@ -154,7 +204,7 @@ public class GoalSeeker {
 				Binary.nachschüssig);
 		
 		goal.setTolerance(0.0000000001);
-		System.out.println(goal.seekEndval());
+		System.out.println(goal.seekVal(Parameter.RENTE));
 
 	}
 
