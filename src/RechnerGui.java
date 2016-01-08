@@ -1,8 +1,9 @@
 import java.awt.*;
+
 import javax.swing.*;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
- 
 import java.text.*;
  
 public class RechnerGui extends JPanel
@@ -38,6 +39,19 @@ public class RechnerGui extends JPanel
 	private JLabel endvalJLabel;
 	private JLabel toleranceJLabel;
 	private JLabel renteJLabel;
+	
+    //Buttons
+    private JButton barJButton;
+	private JButton dynamicJButton;
+	private JButton percentJButton;
+	private JButton yearsJButton;
+	private JButton monthJButton;
+	private JButton sperrMonthJButton;
+	private JButton sperrYearsJButton;
+	private JButton schussJButton;
+	private JButton endvalJButton;
+	private JButton toleranceJButton;
+	private JButton renteJButton;
 	
  
     //Strings for the labels
@@ -102,6 +116,18 @@ public class RechnerGui extends JPanel
     	endvalJLabel = new JLabel(endvalJLabelString);
     	toleranceJLabel = new JLabel(toleranceJLabelString);
     	renteJLabel= new JLabel(renteJLabelString);
+    	
+    	//Create the buttons
+        barJButton = new JButton("Berechne");
+    	dynamicJButton = new JButton("Berechne");
+    	percentJButton = new JButton("Berechne");
+    	yearsJButton = new JButton("Berechne");
+    	monthJButton = new JButton("Berechne");
+    	sperrMonthJButton = new JButton("Berechne");
+    	sperrYearsJButton = new JButton("Berechne");
+    	schussJButton = new JButton("Berechne");
+    	endvalJButton = new JButton("Berechne");
+    	renteJButton= new JButton("Berechne");
     	
         //Create the text fields and set them up.
         barField = new JFormattedTextField(amountFormat);
@@ -193,12 +219,25 @@ public class RechnerGui extends JPanel
         fieldPane.add(sperrMonthField);
         fieldPane.add(sperrYearsField);
         fieldPane.add(schussField);
+        
+        JPanel buttonPane = new JPanel(new GridLayout(0,1));
+        buttonPane.add(barJButton);
+        buttonPane.add(renteJButton);
+        buttonPane.add(endvalJButton);
+        buttonPane.add(percentJButton);
+        buttonPane.add(dynamicJButton);
+        buttonPane.add(yearsJButton);
+        buttonPane.add(monthJButton);
+        buttonPane.add(sperrMonthJButton);
+        buttonPane.add(sperrYearsJButton);
+        buttonPane.add(schussJButton);
 
         //Put the panels in this panel, labels on left,
         //text fields on right.
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        add(labelPane, BorderLayout.CENTER);
-        add(fieldPane, BorderLayout.LINE_END);
+        add(labelPane, BorderLayout.LINE_START);
+        add(fieldPane, BorderLayout.CENTER);
+        add(buttonPane, BorderLayout.LINE_END);
     }
  
     /** Called when a field's "value" property changes. */
