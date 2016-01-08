@@ -1,6 +1,6 @@
 
 public enum Binary {
-	vorschüssig(0), nachschüssig(1);
+	vorschüssig(1), nachschüssig(0);
 	
 	private final int value;
 	
