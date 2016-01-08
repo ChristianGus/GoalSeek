@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -22,7 +24,7 @@ public class RechnerGui extends JPanel
 	private int sperrYears;
 	private int schuss;
 	private double endval;
-	private double tolerance;
+	//private double tolerance;
 	private double rente;
  
 
@@ -37,7 +39,7 @@ public class RechnerGui extends JPanel
 	private JLabel sperrYearsJLabel;
 	private JLabel schussJLabel;
 	private JLabel endvalJLabel;
-	private JLabel toleranceJLabel;
+	//private JLabel toleranceJLabel;
 	private JLabel renteJLabel;
 	
     //Buttons
@@ -50,7 +52,7 @@ public class RechnerGui extends JPanel
 	private JButton sperrYearsJButton;
 	private JButton schussJButton;
 	private JButton endvalJButton;
-	private JButton toleranceJButton;
+	//private JButton toleranceJButton;
 	private JButton renteJButton;
 	
  
@@ -64,7 +66,7 @@ public class RechnerGui extends JPanel
 	private static String sperrYearsJLabelString = "Sperrzeit-Jahre";
 	private static String schussJLabelString = "Vor-/Nachschüssig (1/0)";
 	private static String endvalJLabelString = "Endwert";
-	private static String toleranceJLabelString = "Toleranz";
+	//private static String toleranceJLabelString = "Toleranz";
 	private static String renteJLabelString = "Rente";
  
     //Fields for data entry
@@ -114,33 +116,142 @@ public class RechnerGui extends JPanel
     	sperrYearsJLabel = new JLabel(sperrYearsJLabelString);
     	schussJLabel = new JLabel(schussJLabelString);
     	endvalJLabel = new JLabel(endvalJLabelString);
-    	toleranceJLabel = new JLabel(toleranceJLabelString);
+    	//toleranceJLabel = new JLabel(toleranceJLabelString);
     	renteJLabel= new JLabel(renteJLabelString);
     	
-    	//Create the buttons
+    	//Create the buttons and set them up
         barJButton = new JButton("Berechne");
+        barJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.BAR);
+				bar = seeker.getBar();
+				barField.setValue(bar);
+			}
+		});
+        
     	dynamicJButton = new JButton("Berechne");
+    	dynamicJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.DYNAMIC);
+				dynamic = seeker.getBar();
+				dynamicField.setValue(dynamic);
+			}
+		});
+    	
     	percentJButton = new JButton("Berechne");
+    	percentJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.PERCENT);
+				percent = seeker.getPercent();
+				percentField.setValue(percent);
+			}
+		});
+    	
     	yearsJButton = new JButton("Berechne");
+    	yearsJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.YEARS);
+				Number val = seeker.getYears();
+				yearsField.setValue(val);
+			}
+		});
+    	
     	monthJButton = new JButton("Berechne");
+    	monthJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.MONTH);
+				Number val = seeker.getMonth();
+				monthField.setValue(val);
+			}
+		});
+    	
     	sperrMonthJButton = new JButton("Berechne");
+    	sperrMonthJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.SPERR_MONTH);
+				Number val = seeker.getSperrMonth();
+				sperrMonthField.setValue(val);
+			}
+		});
+    	
     	sperrYearsJButton = new JButton("Berechne");
+    	sperrYearsJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.SPERR_YEARS);
+				Number val = seeker.getSperrYears();
+				sperrYearsField.setValue(val);
+			}
+		});
+    	
     	schussJButton = new JButton("Berechne");
+    	schussJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.SCHUSS);
+				Number val = seeker.getSchuss();
+				schussField.setValue(val);
+			}
+		});
+    	
     	endvalJButton = new JButton("Berechne");
+    	endvalJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.ENDVAL);
+				Number val = seeker.getEndval();
+				endvalField.setValue(val);
+			}
+		});
+    	
     	renteJButton= new JButton("Berechne");
+    	renteJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				seeker.seekVal(Parameter.RENTE);
+				Number val = seeker.getRente();
+				renteField.setValue(val);
+			}
+		});
     	
         //Create the text fields and set them up.
-        barField = new JFormattedTextField(amountFormat);
+        barField = new JFormattedTextField(paymentFormat);
         barField.setValue(bar);
         barField.setColumns(10);
         barField.addPropertyChangeListener("value", this);
         
-        renteField = new JFormattedTextField(amountFormat);
+        renteField = new JFormattedTextField(paymentFormat);
         renteField.setValue(rente);
         renteField.setColumns(10);
         renteField.addPropertyChangeListener("value", this);
         
-        endvalField = new JFormattedTextField(amountFormat);
+        endvalField = new JFormattedTextField(paymentFormat);
         endvalField.setValue(endval);
         endvalField.setColumns(10);
         endvalField.addPropertyChangeListener("value", this);
@@ -175,7 +286,7 @@ public class RechnerGui extends JPanel
         percentField.setColumns(10);
         percentField.addPropertyChangeListener("value", this);
  
-        dynamicField = new JFormattedTextField(amountFormat);
+        dynamicField = new JFormattedTextField(percentFormat);
         dynamicField.setValue(dynamic);
         dynamicField.setColumns(10);
         dynamicField.addPropertyChangeListener("value", this);
@@ -300,6 +411,7 @@ public class RechnerGui extends JPanel
     //parse numbers input by user.
     private void setUpFormats() {
         amountFormat = NumberFormat.getNumberInstance();
+        amountFormat.setMaximumIntegerDigits(2);
  
         percentFormat = NumberFormat.getNumberInstance();
         percentFormat.setMinimumFractionDigits(3);
