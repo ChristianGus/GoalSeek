@@ -1,10 +1,5 @@
 import java.awt.*;
-import java.awt.event.*;
- 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.text.*;
- 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
  
@@ -12,7 +7,11 @@ import java.text.*;
  
 public class RechnerGui extends JPanel
                                     implements PropertyChangeListener {
-    //Values for the fields
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//Values for the fields
 	private double bar;
 	private double dynamic;
 	private double percent;
@@ -25,9 +24,7 @@ public class RechnerGui extends JPanel
 	private double tolerance;
 	private double rente;
  
-	private double amount = 100000;
-    private double rate = 7.5;  //7.5%
-    private int numPeriods = 30;
+
  
     //Labels to identify the fields
     private JLabel barJLabel;
@@ -42,10 +39,6 @@ public class RechnerGui extends JPanel
 	private JLabel toleranceJLabel;
 	private JLabel renteJLabel;
 	
-    private JLabel amountLabel;
-    private JLabel rateLabel;
-    private JLabel numPeriodsLabel;
-    private JLabel paymentLabel;
  
     //Strings for the labels
     private static String barJLabelString = "Barwert";
@@ -70,13 +63,8 @@ public class RechnerGui extends JPanel
 	private JFormattedTextField sperrYearsField;
 	private JFormattedTextField schussField;
 	private JFormattedTextField endvalField;
-	private JFormattedTextField toleranceField;
 	private JFormattedTextField renteField;
 	
-    private JFormattedTextField amountField;
-    private JFormattedTextField rateField;
-    private JFormattedTextField numPeriodsField;
-    private JFormattedTextField paymentField;
  
     //Formats to format and parse numbers
     private NumberFormat amountFormat;
