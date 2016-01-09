@@ -125,7 +125,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.BAR);
 				bar = seeker.getBar();
 				barField.setValue(bar);
@@ -137,7 +137,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.DYNAMIC);
 				dynamic = seeker.getBar();
 				dynamicField.setValue(dynamic);
@@ -149,7 +149,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.PERCENT);
 				percent = seeker.getPercent();
 				percentField.setValue(percent);
@@ -161,7 +161,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.YEARS);
 				Number val = seeker.getYears();
 				yearsField.setValue(val);
@@ -173,7 +173,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.MONTH);
 				Number val = seeker.getMonth();
 				monthField.setValue(val);
@@ -185,7 +185,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.SPERR_MONTH);
 				Number val = seeker.getSperrMonth();
 				sperrMonthField.setValue(val);
@@ -197,7 +197,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.SPERR_YEARS);
 				Number val = seeker.getSperrYears();
 				sperrYearsField.setValue(val);
@@ -209,7 +209,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.SCHUSS);
 				Number val = seeker.getSchuss();
 				schussField.setValue(val);
@@ -221,7 +221,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.ENDVAL);
 				Number val = seeker.getEndval();
 				endvalField.setValue(val);
@@ -233,7 +233,7 @@ public class RechnerGui extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GoalSeeker seeker = new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
+				GoalSeeker seeker  = getSeeker();
 				seeker.seekVal(Parameter.RENTE);
 				Number val = seeker.getRente();
 				renteField.setValue(val);
@@ -417,5 +417,9 @@ public class RechnerGui extends JPanel
         percentFormat.setMinimumFractionDigits(3);
  
         paymentFormat = NumberFormat.getCurrencyInstance();
+    }
+    
+    private GoalSeeker getSeeker() {
+    	return new GoalSeeker(bar, rente, endval, percent, dynamic, years, month, sperrMonth, sperrYears, Binary.values()[schuss]);
     }
 }
