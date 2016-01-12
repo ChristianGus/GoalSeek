@@ -204,14 +204,17 @@ public class GoalSeeker {
 				Binary.nachschüssig);
 		
 		goal.setTolerance(0.0000000001);
-		System.out.println(goal.seekVal(Parameter.RENTE));
+	
+		String a = "Ihre errechnete Rente hat den Wert: ";
+
+         		
+			System.out.println( a + goal.seekVal(Parameter.RENTE));
 
 	}
 
 	public double getDynamic() {
 		return dynamic;
-	}
-
+	} 
 	public void setDynamic(double dynamic) {
 		this.dynamic = dynamic;
 	}
